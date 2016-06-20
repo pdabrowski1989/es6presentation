@@ -1,0 +1,19 @@
+{
+  "name": "es6presentation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdabrowski1989/es6presentation.git"
+  },
+  "author": "pawel dabrowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pdabrowski1989/es6presentation/issues"
+  },
+  "homepage": "https://github.com/pdabrowski1989/es6presentation#readme"
+}
