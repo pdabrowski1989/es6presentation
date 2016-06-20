@@ -44,11 +44,13 @@
                 <img src="img/babel-logo.png">
                 <div class="row">
                     <div style="width:50%; float: left" class="column">
+                        <h5>ES5</h5>
                             <pre><code data-trim class="js">
                    [1,2,3].map(n => n + 1);
                 </code></pre>
                     </div>
                     <div style="width:50%; float: right" class="column fragment">
+                        <h5>ES6</h5>
  <pre><code data-trim class="js">
                   [1,2,3].map(function(n) {
   return n + 1;
@@ -111,12 +113,118 @@ function test() {
 
         </section>
 
-        <section>Spread
+        <section>
+            <section>
+                <h3>Spread (...)</h3>
 
-            <section>Slide 1</section>
-            <section>Slide 2</section>
+                <div class="row">
+                    <div style="width:60%; float: left" class="column">
+                        <h5>ES5</h5>
+
+                       <pre><code data-trim class="js">
+function foo(x,y,z) {
+    console.log( x, y, z );
+}
+foo.apply(null, [1,2,3]); // 1 2 3
+                           </code></pre>
+                    </div>
+                    <div style="width:40%; float: right" class="column fragment">
+                        <h5>ES6</h5>
+                       <pre><code data-trim class="js">
+function foo(x,y,z) {
+    console.log( x, y, z );
+}
+foo(...[1,2,3]); // 1 2 3
+                           </code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Rest</h3>
+                <ul>
+                    <li>gather the rest of the arguments (if any) into an array</li>
+                </ul>
+                       <pre><code data-trim class="js">
+function foo(x,y, ...z) {
+    console.log( x, y, z );
+}
+foo( 1, 2, 3, 4, 5 ); // 1 2 [3,4,5]
+                           </code></pre>
+            </section>
         </section>
-        <section>Slide 2</section>
+        <section>
+            <h5>Destructuring assignment</h5>
+                       <pre><code data-trim class="js">
+var a, b, rest;
+[a, b] = [1, 2];
+console.log(a); // 1
+console.log(b); // 2
+
+[a, b, ...rest] = [1, 2, 3, 4, 5]
+console.log(a); // 1
+console.log(b); // 2
+console.log(rest); // [3, 4, 5]
+                           </code></pre>
+        </section>
+
+        <section>
+            <h5>Arrow functions</h5>
+            <div class="row">
+                <div style="width:50%; float: left" class="column">
+                    <h5>ES5</h5>
+                               <pre><code data-trim class="js">
+var square = function(x) {
+  return x * x;
+};
+var add = function(x, y) {
+  return x + y;
+};
+var total = function() {
+  return square(add(5, 3));
+};
+
+console.log('5 * 5 = ', square(5));
+console.log('2 + 3 = ', add(2, 3));
+console.log(
+  '(5 + 3)*(5 + 3) = ', total());
+                           </code></pre>
+                </div>
+                <div style="width:50%; float: right" class="column fragment">
+                    <h5>ES6</h5>
+                               <pre><code data-trim class="js">
+let square = x => x * x;
+let add = (x, y) => x + y;
+let total = () => square(add(5,3));
+
+console.log('5 * 5 = ', square(5));
+console.log('2 + 3 = ', add(2, 3));
+console.log(
+  '(5 + 3)*(5 + 3) = ', total());
+                           </code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Links</h3>
+            <ul>
+                <li>
+                    <a href="https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/README.md#you-dont-know-js-es6--beyond">You
+                        Don't Know JS: ES6 & Beyond</a></li>
+                <li><a href="https://developer.mozilla.org/">https://developer.mozilla.org/</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <section>
+                <h3>Thanks</h3>
+            </section>
+
+            <section>
+                <img width="600" src="img/ugqqr.jpg">
+            </section>
+        </section>
     </div>
 </div>
 
