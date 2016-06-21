@@ -32,7 +32,6 @@
                     Author: Dabrowski Pawel
                 </small>
                 <br>
-                <small><a href="https://github.com/pdabrowski1989/es6presentation.git">https://github.com/pdabrowski1989</a></small>
             </p>
         </section>
         <section>
@@ -116,6 +115,60 @@ function test() {
 
         <section>
             <section>
+                <h3>Default Parameters</h3>
+
+                <h5>ES5</h5>
+                <div>
+             <pre><code data-trim class="js">
+function foo(x,y) {
+    x = x || 11;
+    y = y || 31;
+    console.log( x + y );
+}
+
+foo(); // 42
+foo(5, 6); // 11
+foo(5); // 36
+foo(null, 6); // 17
+foo( 0, 42 ); // 53 <-- Oops, not 42
+                </code></pre>
+                </div>
+                <div class="row fragment">
+                                 <pre><code data-trim class="js">
+function foo(x,y) {
+    x = (x !== undefined) ? x : 11;
+    y = (y !== undefined) ? y : 31;
+    console.log( x + y );
+}
+
+foo( 0, 42 ); // 42
+foo( undefined, 6 ); // 17
+                </code></pre>
+                </div>
+
+            </section>
+
+            <section>
+                <h5>ES6</h5>
+         <pre><code data-trim class="js">
+function foo(x = 11, y = 31) {
+    console.log( x + y );
+}
+
+foo(); // 42
+foo( 5, 6 ); // 11
+foo( 0, 42 ); // 42
+foo( 5 ); // 36
+foo( 5, undefined ); // 36 <-- `undefined` is missing
+foo( 5, null ); // 5 <-- null coerces to `0`
+foo( undefined, 6 ); // 17 <-- `undefined` is missing
+foo( null, 6 ); // 6 <-- null coerces to `0`
+                </code></pre>
+            </section>
+        </section>
+
+        <section>
+            <section>
                 <h3>Spread (...)</h3>
 
                 <div class="row">
@@ -167,6 +220,32 @@ console.log(b); // 2
 console.log(a); // 1
 console.log(b); // 2
 console.log(rest); // [3, 4, 5]
+                           </code></pre>
+        </section>
+
+        <section>
+            <h5>EXTENDED OBJECT LITERALS</h5>
+
+               <pre><code data-trim class="js">
+
+var obj = {
+    // defining prototype on object creation
+    __proto__: theProtoObj,
+
+    // shortcut for ‘handler: handler’
+    handler,
+
+    // shortcut for methods - 'toString: function() {}'
+    toString() {
+     // base class method call with 'super'
+     return 'd ' + super.toString();
+    },
+
+    // dynamic property names
+    [ 'prop_' + (() => 42)() ]: 42
+};
+
+
                            </code></pre>
         </section>
 
@@ -223,9 +302,10 @@ var f3 = (x,y) => {
         <section>
             <section><h2>Classes</h2></section>
             <section><img src="img/confused-cat.jpg"></section>
-            <section>                <div class="row">
-                <div style="width:50%; float: left" class="column">
-                    <h5>ES5</h5>
+            <section>
+                <div class="row">
+                    <div style="width:50%; float: left" class="column">
+                        <h5>ES5</h5>
                                <pre><code data-trim class="js">
 function Foo(a,b) {
     this.x = a;
@@ -239,9 +319,9 @@ Foo.prototype.gimmeXY = function() {
 var f = new Foo(2, 1);
 f.gimmeXY(); // 2
                            </code></pre>
-                </div>
-                <div style="width:50%; float: right" class="column fragment">
-                    <h5>ES6</h5>
+                    </div>
+                    <div style="width:50%; float: right" class="column fragment">
+                        <h5>ES6</h5>
                                <pre><code data-trim class="js">
 class Foo {
     constructor(a,b) {
@@ -258,18 +338,109 @@ let f = new Foo(2, 1);
 f.gimmeXY() // 2
 
                            </code></pre>
+                    </div>
                 </div>
-            </div>
                 <div style="width:100%; overflow: hidden" class="row fragment">
-                     <ul>
-                         <li>Class declarations are not hoisted!</li>
-                     </ul>
+                    <ul>
+                        <li>Class declarations are not hoisted!</li>
+                    </ul>
                 </div>
             </section>
             <section>
+                <h3>Extends and super</h3>
 
+                 <pre><code data-trim class="js">
+class extFoo extends Foo {
+    constructor(a,b,c) {
+        super(a, b); // refers to the “parent constructor”,
+        this.z = c;
+    }
+
+    gimmeXYZ() {
+        return super.gimmeXY() * this.z;
+    }
+}
+
+let f1 = new extFoo(1, 2, 3);
+f1.gimmeXYZ(); // 6
+                     </code></pre>
             </section>
 
+        </section>
+
+        <section>
+            <h3>Modules</h3>
+          <section>
+            <h5>ES5</h5>
+<pre><code data-trim class="js">
+function Hello(name) {
+    function greeting() {
+        console.log( "Hello " + name + "!" );
+    }
+
+    // public API
+    return {
+        greeting: greeting
+    };
+}
+var me = Hello("Pawel");
+me.greeting(); // Hello Pawel!
+                     </code></pre>
+          </section>
+            <section>
+                <h5>ES6</h5>
+                 <pre><code data-trim class="js">
+// lib.js
+function generateRandom() {
+    return Math.random();
+}
+
+function sum(a, b) {
+    return a + b;
+}
+
+export {generateRandom, sum}
+
+// main.js
+import { generateRandom, sum } from 'lib';
+
+console.log(generateRandom()); // logs a random number
+console.log(sum(1, 2)); //3
+                     </code></pre>
+            </section>
+            <section>
+                <h5>Import the complete module</h5>
+                 <pre><code data-trim class="js">
+// main.js
+import * as from 'lib';
+
+console.log(generateRandom()); // logs a random number
+console.log(sum(1, 2)); // 3
+                     </code></pre>
+            </section>
+            <section>
+                <h5>Single default export</h5>
+                 <pre><code data-trim class="js">
+// MyClass.js
+export default class { ··· }
+
+import MyClass from 'MyClass';
+const inst = new MyClass();
+                     </code></pre>
+            </section>
+        </section>
+
+        <section>
+            <h3>The future => ES2016</h3>
+            <small>e.g The Array method includes</small>
+                 <pre><code data-trim class="js">
+Array.prototype.includes(value : any) : boolean
+
+> ['a', 'b', 'c'].includes('a')
+true
+> ['a', 'b', 'c'].includes('d')
+false
+                     </code></pre>
         </section>
 
         <section>
@@ -284,7 +455,8 @@ f.gimmeXY() // 2
 
         <section>
             <section>
-                <h3>Thanks</h3>
+                <h3>T.Hanks</h3>
+                <img height="300" src="img/1312168-tom-hanks-wallpapers-and-photos.jpg">
             </section>
 
             <section>
